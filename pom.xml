@@ -35,7 +35,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.ledoude.TestHash</mainClass>
+                            <mainClass>org.ledoude.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

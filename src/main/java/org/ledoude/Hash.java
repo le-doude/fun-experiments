@@ -5,19 +5,18 @@ package org.ledoude;
  */
 public interface Hash<T> {
 
-    public static final class Defaults {
-
+    final class Defaults {
         public final static Hash<String> JAVA_HASH = new Hash<String>() {
             @Override
             public int hash(String s) {
                 return s.hashCode();
             }
+
+            @Override
+            public String toString() {
+                return "Object::hashCode";
+            }
         };
-
-    }
-
-    static long intToUnsignedLong(int i) {
-        return 0L | i;
     }
 
     int hash(T t);
