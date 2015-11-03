@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
  */
 public class Djikstra {
 
-    public static Result djikstra(Node source, Node destination, Collection<Vertex> vertices) {
+    public static Result djikstra(Node source, Node destination, Collection<Edge> vertices) {
 
         PriorityQueue<PQElement> queue = new PriorityQueue<>(PQElement.comparator);
         HashMap<Node, Integer> distances = new HashMap<>();
         HashMap<Node, Node> previous = new HashMap<>();
 
-        Map<Node, List<Vertex>> connections = nodeToConnections(vertices);
+        Map<Node, List<Edge>> connections = nodeToConnections(vertices);
 
         distances.put(source, 0);
         previous.put(source, Node.EMPTY);
@@ -25,9 +25,9 @@ public class Djikstra {
 
         while (!queue.isEmpty()) {
             PQElement current = queue.poll();
-            for (Vertex vertex : connections.getOrDefault(current.node, Collections.emptyList())) {
-                Node n = vertex.to;
-                Integer d = distances.get(current.node) + vertex.cost;
+            for (Edge edge : connections.getOrDefault(current.node, Collections.emptyList())) {
+                Node n = edge.to;
+                Integer d = distances.get(current.node) + edge.cost;
                 if (distances.getOrDefault(n, Integer.MAX_VALUE) > d) {
                     distances.put(n, d);
                     previous.put(n, current.node);
@@ -74,10 +74,10 @@ public class Djikstra {
     }
 
 
-    static Map<Node, List<Vertex>> nodeToConnections(Collection<Vertex> vs) {
-        HashMap<Node, List<Vertex>> r = new HashMap<>();
-        List<Vertex> l;
-        for (Vertex v : vs) {
+    static Map<Node, List<Edge>> nodeToConnections(Collection<Edge> vs) {
+        HashMap<Node, List<Edge>> r = new HashMap<>();
+        List<Edge> l;
+        for (Edge v : vs) {
             l = r.get(v.from);
             if (l == null) {
                 l = new ArrayList<>();
@@ -122,8 +122,8 @@ public class Djikstra {
             return new Node(s);
         }
 
-        public Vertex to(Node n, int cost) {
-            return new Vertex(this, n, cost);
+        public Edge to(Node n, int cost) {
+            return new Edge(this, n, cost);
         }
 
         public Node(String id) {
@@ -151,12 +151,12 @@ public class Djikstra {
         }
     }
 
-    public static class Vertex {
+    public static class Edge {
         final Node from;
         final Node to;
         final int cost;
 
-        public Vertex(Node from, Node to, int cost) {
+        public Edge(Node from, Node to, int cost) {
             this.from = from;
             this.to = to;
             this.cost = cost;
@@ -168,12 +168,12 @@ public class Djikstra {
 
             if (o == null || getClass() != o.getClass()) return false;
 
-            Vertex vertex = (Vertex) o;
+            Edge edge = (Edge) o;
 
             return new EqualsBuilder()
-                    .append(cost, vertex.cost)
-                    .append(from, vertex.from)
-                    .append(to, vertex.to)
+                    .append(cost, edge.cost)
+                    .append(from, edge.from)
+                    .append(to, edge.to)
                     .isEquals();
         }
 

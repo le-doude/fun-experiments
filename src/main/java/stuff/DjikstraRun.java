@@ -1,7 +1,6 @@
 package stuff;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.RandomUtils;
 import stuff.Djikstra.*;
 
 import java.util.*;
@@ -15,11 +14,11 @@ public class DjikstraRun {
 
     public static void main(String[] args) {
 
-        List<Node> nodes = Stream.of(ArrayUtils.toObject("abcdefghijk".toUpperCase().toCharArray())).map((c) -> Node.make(Character.toString(c))).collect(Collectors.toList());
-        List<Vertex> connections = new ArrayList<>();
+        List<Node> nodes = Stream.of(ArrayUtils.toObject("abcefghijklmnopqrstuvwxyz".toUpperCase().toCharArray())).map((c) -> Node.make(Character.toString(c))).collect(Collectors.toList());
+        List<Edge> connections = new ArrayList<>();
         Random r = new Random();
         for (Node node : nodes) {
-            for (Node next : pickSome(nodes, r.nextInt(4))) {
+            for (Node next : pickSome(nodes, r.nextInt(nodes.size()))) {
                 if (!node.equals(next)) {
                     connections.add(node.to(next, r.nextInt(25) + 1));
                 }
